@@ -37,3 +37,10 @@ class OrderForm(FlaskForm):
     size = StringField("Size", validators=[DataRequired()], widget=TextArea())
     quantity = StringField("Quantity", validators=[DataRequired()])
     submit = SubmitField()
+
+
+class ProductsForm(FlaskForm):
+    name = StringField("Product Name", validators=[DataRequired()])
+    category = StringField("Category", validators=[DataRequired()], widget=TextArea())
+    description = StringField("Description", validators=[DataRequired()])
+    submit = SubmitField()

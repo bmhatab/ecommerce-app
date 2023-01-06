@@ -3,7 +3,7 @@ from flask import Flask, render_template,flash,request,redirect,url_for,session
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin,login_user,LoginManager,login_required,logout_user,current_user
 from app.admin import admin
-from app.models import Items,Users
+from app.models import Items,Users,Products
 from app import db
 from flask_wtf import FlaskForm
 from wtforms import Form,StringField,SubmitField,PasswordField,ValidationError
@@ -25,10 +25,17 @@ class UserForm(FlaskForm):
     password_hash = PasswordField("Password : ", validators=[DataRequired(),EqualTo('password_hash_v',message="Passwords must match!")])
     password_hash_v = PasswordField("Confirm Password : ", validators=[DataRequired()])
 
+class ProductsForm(FlaskForm):
+    name = StringField("Product Name", validators=[DataRequired()])
+    category = StringField("Category", validators=[DataRequired()], widget=TextArea())
+    description = StringField("Description", validators=[DataRequired()])
+    submit = SubmitField()
+
+
 
 @admin.route('/')
 def index():
-    return render_template("base_index.html")
+    return render_template("admin/base_index.html")
 
 @admin.route('/add-item', methods = ['POST','GET'])
 @login_required
@@ -41,7 +48,7 @@ def add_item():
         flash("Item added successfully")
         return redirect(url_for('main.add_item'))
     else:
-        return render_template("add_item.html", form=form)
+        return render_template("admin/add_item.html", form=form)
         
         
    
@@ -49,13 +56,13 @@ def add_item():
 @login_required
 def view_items():
     items = Items.query.order_by(Items.id)
-    return render_template("items.html",items=items)
+    return render_template("admin/items.html",items=items)
 
 @admin.route('/item/<int:id>')
 @login_required
 def item_zoom(id):
     item = Items.query.get_or_404(id)
-    return render_template('item.html', item=item)
+    return render_template('admin/item.html', item=item)
 
 
 @admin.route('/item/delete/<int:id>')
@@ -69,19 +76,19 @@ def delete_item(id):
             db.session.commit()
             flash("Item was deleted")
             items = Items.query.order_by(Items.date_posted)
-            return render_template("items.html",items=items)
+            return render_template("admin/items.html",items=items)
 
         
         
         except:
             flash("There was a problem deleting item..try again")
             items = Items.query.order_by(Items.id)
-            return render_template("items.html",items=items)
+            return render_template("admin/items.html",items=items)
 
     else:
          flash("Unauthorized Access")
          items = Items.query.order_by(Items.date_posted)
-         return render_template("items.html",items=items)
+         return render_template("admin/items.html",items=items)
 
 
 
@@ -98,19 +105,19 @@ def edit_item(id):
         db.session.add(item)
         db.session.commit()
         flash("Item has been updated!")
-        return redirect(url_for('main.item',id=item.id))
+        return redirect(url_for('admin.item',id=item.id))
     
     if current_user.id == 1:
         form.name.data = item.name
     # form.author.data = post.author
         form.size.data = item.size
         form.price.data = item.price
-        return render_template('edit_item.html', form=form)
+        return render_template('admin/edit_item.html', form=form)
 
     else:
         flash("Unauthorized Access")
         items = Items.query.order_by(Items.date_posted)
-        return render_template("items.html",items=items)
+        return render_template("admin/items.html",items=items)
 
 
 
@@ -135,3 +142,24 @@ def add_user():
     #To display user names on the page 
     our_users = Users.query.order_by(Users.date_added)   
     return render_template('add_user.html',form=form,name=name,our_users=our_users)
+
+
+@admin.route('/add-product', methods = ['POST','GET'])
+@login_required
+def add_product():
+    form = ProductsForm(request.form)
+    if form.validate_on_submit():
+        product = Products(name=form.name.data, category=form.category.data, description=form.description.data)
+        db.session.add(product)
+        db.session.commit()
+        flash("Product added successfully")
+        return redirect(url_for('admin.add_product'))
+    else:
+        return render_template("admin/add_product.html", form=form)
+
+
+@admin.route('/products')
+@login_required
+def view_products():
+    products = Products.query.order_by(Products.id)
+    return render_template("admin/products.html",products=products)        

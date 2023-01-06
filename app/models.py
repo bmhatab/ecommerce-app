@@ -56,4 +56,12 @@ class Items(db.Model):
     name = db.Column(db.String(255))
     size = db.Column(db.String(255))
     price = db.Column(db.Integer())
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+
+class Products(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255))
+    category = db.Column(db.String(255))
+    description = db.Column(db.Integer())
+    item = db.relationship('Items', backref='product_item')
 

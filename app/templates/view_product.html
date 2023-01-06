@@ -1,0 +1,33 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Product View</title>
+    <style>
+      /* Add to Cart Button */
+      button.add-to-cart {
+        background-color: #4caf50; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+      }
+
+      /* Description Section */
+      .product-description {
+        margin: 20px 0;
+        font-size: 16px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    {% for product in products %}
+      <h1>{{ product.name }}</h1>
+      <p class="product-description">{{ product.description }}</p>
+      <button class="add-to-cart">Add to Cart</button>
+    {% endfor %}
+  </body>
+</html>

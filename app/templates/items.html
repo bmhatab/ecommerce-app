@@ -15,27 +15,18 @@
     {% endfor %}
 
 
-<h1>Menu Items...</h1>
+    <h1>Menu Items...</h1>
 
     {% for item in items %}
-    <div class="shadow p-3 mb-5 bg-body rounded">
-        <div class="card text-center">
-            <div class="card-header">
-                Menu Items...
-            </div>
-            <div class="card-body">
-              <h5 class="card-title">{{item.name}}</h5>
-              <hr>
-              <p class="card-text"></br>{{item.size}}</br>{{item.price}}</p>
-              <a class="btn btn-outline-secondary" href="{{url_for('main.item_zoom', id=item.id)}}">View Item</a>
-              <a class="btn btn-outline-secondary" href="{{url_for('main.edit_item', id=item.id)}}">Edit Item</a>
-              <a class="btn btn-outline-danger" href="{{url_for('main.delete_item', id=item.id)}}">Delete Item</a>
-            </div>
-            <div class="card-footer text-muted">
-               Best place to order
-            </div>
-          </div>
+
+    <div class="menu-card">
+        <div class="category-name">{{item.name}}</div>
+        <div class="category-description">{{item.size}}<p>{{item.price}}</p></div>
+    </br></br></br></br></br></br></br></br>
+        <a class="btn btn-outline-secondary" href="{{url_for('main.item_zoom', id=item.id)}}">View Item</a>
     </div>
+   
+    
     {% endfor %}
 
 

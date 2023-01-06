@@ -90,8 +90,9 @@ def view_items():
 @main.route('/item/<int:id>')
 @login_required
 def item_zoom(id):
+    form = ItemsForm()
     item = Items.query.get_or_404(id)
-    return render_template('item.html', item=item)
+    return render_template('item.html', item=item,form=form)
 
 
 @main.route('/item/delete/<int:id>')
