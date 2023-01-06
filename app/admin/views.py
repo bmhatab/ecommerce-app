@@ -36,7 +36,7 @@ class ProductsForm(FlaskForm):
 
 @admin.route('/')
 def index():
-    return render_template("admin/base_index.html")
+    return render_template("admin_index.html")
 
 @admin.route('/add-item', methods = ['POST','GET'])
 @login_required

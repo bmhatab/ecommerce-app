@@ -1,10 +1,9 @@
-{% extends 'base_user.html' %}
+{% extends 'homepage.html' %}
 
 {% block title %} Menu Items {% endblock %}
 
 
 {% block main %}
-<div class="container">
 
     <!--This loops through the flash message -->
     {% for message in get_flashed_messages() %}
@@ -22,10 +21,9 @@
     <div class="menu-card">
         <div class="category-name">{{product.name}}</div>
         <div class="category-description">{{product.category}}<p>{{product.description}}</p></div>
-    </br></br></br></br></br></br></br></br>
-    <a class="btn btn-outline-secondary" href="{{ url_for('main.menu_category', category=product.category) }}">View Items</a>
+     </br>
+        <a class="btn btn-outline-secondary" href="{{ url_for('main.menu_category', category=product.category) }}">View Items</a>
     </div>
-   
     
     {% endfor %}
 

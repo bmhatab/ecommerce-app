@@ -17,18 +17,24 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="{{url_for('main.view_items')}}">Items Menu</a>
-              <a class="nav-link" href="{{url_for('main.dashboard')}}">Dashboard</a>
-              <a class="nav-link" href="{{url_for('main.add_item')}}">Add Item</a>
-              <a class="nav-link" href="{{url_for('main.name')}}">Name</a>
+              <a class="nav-link active" aria-current="page" href="{{url_for('admin.view_products')}}">Products</a>
+              <a class="nav-link" href="{{url_for('admin.add_product')}}">Add Products</a>
+              <a class="nav-link" href="{{url_for('admin.view_items')}}">Items</a>
+              <a class="nav-link" href="{{url_for('admin.add_item')}}">Add Item</a>
               <a class="nav-link" href="{{url_for('main.add_user')}}">Add User</a>
             </div>
           </div>
         </div>
         <div class="container-fluid">
             <form class="container-fluid justify-content-start">
-              <a href='/logout'>
+              <a href="{{url_for('main.add_user')}}">
+                <button class="btn btn-outline-success me-2" type="button">Sign Up</button>
+              </a>
+              <a href="{{url_for('main.logout')}}">
                 <button class="btn btn-sm btn-outline-secondary" type="button">Log Out</button>
+              </a>
+              <a href="{{url_for('main.login')}}">
+                <button class="btn btn-sm btn-outline-secondary" type="button">Login</button>
               </a>
               </form>
         </div>
