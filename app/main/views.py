@@ -224,5 +224,13 @@ def delete(id):
 @main.route('/menu')
 @login_required
 def menu():
-    products = Products.query.order_by(Products.id)
-    return render_template("menu.html",products=products)
+    products = Products.query.all()
+    return render_template('menu.html', products=products)
+
+
+@main.route('/menu/<string:category>')
+@login_required
+def menu_category(category):
+    products = Products.query.all()
+    items = Items.query.filter_by(category=category).all()
+    return render_template("menu_category.html", products=products, items=items)

@@ -1,7 +1,6 @@
 {% extends 'base_user.html' %}
 
-{% block title %} Menu Items {% endblock %}
-
+{% block title %} Products {% endblock %}
 
 {% block main %}
 <div class="container">
@@ -15,19 +14,19 @@
     {% endfor %}
 
 
-    <h1>Menu Items...</h1>
 
-    {% for product in products %}
+<h1>Items...</h1>
 
+
+<ul>
+    {% for item in items %}
     <div class="menu-card">
-        <div class="category-name">{{product.name}}</div>
-        <div class="category-description">{{product.category}}<p>{{product.description}}</p></div>
+        <div class="category-name">{{item.name}}</div>
+        <div class="category-description">{{item.size}}<p>${{item.price}}</p></div>
     </br></br></br></br></br></br></br></br>
-    <a class="btn btn-outline-secondary" href="{{ url_for('main.menu_category', category=product.category) }}">View Items</a>
+        <a class="btn btn-outline-secondary" href="#">Add to Cart</a>
     </div>
-   
-    
     {% endfor %}
-
+</ul>
 
 {% endblock %}
