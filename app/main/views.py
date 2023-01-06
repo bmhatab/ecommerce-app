@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db,login_manager
 from . import main
 from .forms import UserForm,NamerForm,LoginForm,ItemsForm
-from ..models import Users,Items
+from ..models import Users,Items,Products
 from flask import Flask, render_template,flash,request,redirect,url_for,session
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin,login_user,LoginManager,login_required,logout_user,current_user
@@ -219,3 +219,10 @@ def delete(id):
     else:
         return render_template("add_user.html",form=form,user=user)
 
+
+
+@main.route('/menu')
+@login_required
+def menu():
+    products = Products.query.order_by(Products.id)
+    return render_template("menu.html",products=products)

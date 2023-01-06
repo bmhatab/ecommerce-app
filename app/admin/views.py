@@ -16,6 +16,7 @@ class ItemsForm(FlaskForm):
     name = StringField("Item Name", validators=[DataRequired()])
     size = StringField("Size", validators=[DataRequired()], widget=TextArea())
     price = StringField("Price", validators=[DataRequired()])
+    category = StringField("Category", validators=[DataRequired()])
     submit = SubmitField()
 
 class UserForm(FlaskForm):
@@ -42,11 +43,11 @@ def index():
 def add_item():
     form = ItemsForm(request.form)
     if form.validate_on_submit():
-        item = Items(name=form.name.data, size = form.size.data, price = form.price.data)
+        item = Items(name=form.name.data, size = form.size.data, price = form.price.data, category=form.category.data)
         db.session.add(item)
         db.session.commit()
         flash("Item added successfully")
-        return redirect(url_for('main.add_item'))
+        return redirect(url_for('admin.add_item'))
     else:
         return render_template("admin/add_item.html", form=form)
         
@@ -102,10 +103,11 @@ def edit_item(id):
        # post.author = form.author.data
         item.size = form.size.data
         item.price = form.price.data
-        db.session.add(item)
+        item.category = form.category.data
+        #db.session.add(item)
         db.session.commit()
         flash("Item has been updated!")
-        return redirect(url_for('admin.item',id=item.id))
+        return redirect(url_for('admin.edit_item',id=item.id))
     
     if current_user.id == 1:
         form.name.data = item.name
@@ -163,3 +165,57 @@ def add_product():
 def view_products():
     products = Products.query.order_by(Products.id)
     return render_template("admin/products.html",products=products)        
+
+@admin.route('/product/edit/<int:id>', methods = ["GET","POST"])
+@login_required
+def edit_product(id):
+    product = Products.query.get_or_404(id)
+    form = ProductsForm()
+    if form.validate_on_submit():
+        product.name = form.name.data
+       # post.author = form.author.data
+        product.category = form.category.data
+        product.description = form.description.data
+        db.session.add(product)
+        db.session.commit()
+        flash("Product has been updated!")
+        #return redirect(url_for('admin.products',id=product.id))
+        return render_template('admin/products.html')
+    
+    if current_user.id == 1:
+        form.name.data = product.name
+    # form.author.data = post.author
+        form.category.data = product.category
+        form.description.data = product.description
+        return render_template('admin/edit_product.html', form=form)
+
+    else:
+        flash("Unauthorized Access")
+        product = Products.query.order_by(Products.id)
+        return render_template("admin/products.html",product=product)
+
+@admin.route('/product/delete/<int:id>')
+@login_required
+def delete_product(id):
+    product_to_delete = Products.query.get_or_404(id)
+    id = current_user.id
+    if id == 1:
+        try:
+            db.session.delete(product_to_delete)
+            db.session.commit()
+            flash("Product was deleted")
+            products = Products.query.order_by(Products.id)
+            return render_template("admin/products.html",products=products)
+
+        
+        
+        except:
+            flash("There was a problem deleting item..try again")
+            products = Products.query.order_by(Products.id)
+            return render_template("admin/products.html",products=products)
+
+    else:
+         flash("Unauthorized Access")
+         products = Products.query.order_by(Products.id)
+         return render_template("admin/products.html",products=products)
+

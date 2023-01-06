@@ -28,8 +28,8 @@
               <hr>
               <p class="card-text"></br>{{product.category}}</br>{{product.description}}</p>
               <a class="btn btn-outline-secondary" href="#">View Item</a>
-              <a class="btn btn-outline-secondary" href="#">Edit Item</a>
-              <a class="btn btn-outline-danger" href="#">Delete Item</a>
+              <a class="btn btn-outline-secondary" href="{{url_for('admin.edit_product', id=product.id)}}">Edit Item</a>
+              <a class="btn btn-outline-danger" href="{{url_for('admin.delete_product', id=product.id)}}">Delete Item</a>
             </div>
             <div class="card-footer text-muted">
                Best place to order
