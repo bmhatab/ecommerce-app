@@ -1,0 +1,72 @@
+<!-- base_index.html template -->
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>{% block title %} Home {% endblock %}</title>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">E-Commerce Site</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Shop</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      </ul>
+      <div class="container-fluid">
+        <form class="container-fluid justify-content-start">
+            <a href="{{url_for('main.add_user')}}">
+            <button class="btn btn-outline-success me-2" type="button">Sign Up</button>
+            </a>
+            <a href="{{url_for('main.login')}}">
+            <button class="btn btn-sm btn-outline-secondary" type="button">Login</button>
+            </a>
+        </form>
+        </div>
+  </nav>
+  {% block main %}
+    <div class="jumbotron jumbotron-fluid">
+      <div class="container">
+        <h1 class="display-4">Welcome to Our Restaurant</h1>
+        <p class="lead">We offer a wide variety of delicious dishes, made with the freshest ingredients. Take a look at our menu to see all of the mouthwatering options we have available.</p>
+        <a href="/menu" class="btn btn-primary btn-lg">View Menu</a>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <h2>Fresh Ingredients</h2>
+          <p>We believe in using only the freshest ingredients in our dishes. Our chefs go to great lengths to source the highest quality produce, meats, and other ingredients.</p>
+        </div>
+        <div class="col-md-4">
+          <h2>Expertly Crafted</h2>
+          <p>Our chefs are highly skilled and have years of experience in creating delicious, mouthwatering
+            </p>
+        </div>
+    
+
+
+
+        {% endblock %}
+
+  
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

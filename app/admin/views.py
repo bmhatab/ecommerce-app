@@ -1,0 +1,137 @@
+from datetime import datetime
+from flask import Flask, render_template,flash,request,redirect,url_for,session
+from werkzeug.security import generate_password_hash,check_password_hash
+from flask_login import UserMixin,login_user,LoginManager,login_required,logout_user,current_user
+from app.admin import admin
+from app.models import Items,Users
+from app import db
+from flask_wtf import FlaskForm
+from wtforms import Form,StringField,SubmitField,PasswordField,ValidationError
+from wtforms.validators import DataRequired,EqualTo,Length
+from wtforms.widgets import TextArea
+
+
+
+class ItemsForm(FlaskForm):
+    name = StringField("Item Name", validators=[DataRequired()])
+    size = StringField("Size", validators=[DataRequired()], widget=TextArea())
+    price = StringField("Price", validators=[DataRequired()])
+    submit = SubmitField()
+
+class UserForm(FlaskForm):
+    name = StringField("Name : ", validators=[DataRequired()])
+    email = StringField("Email : ", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+    password_hash = PasswordField("Password : ", validators=[DataRequired(),EqualTo('password_hash_v',message="Passwords must match!")])
+    password_hash_v = PasswordField("Confirm Password : ", validators=[DataRequired()])
+
+
+@admin.route('/')
+def index():
+    return render_template("base_index.html")
+
+@admin.route('/add-item', methods = ['POST','GET'])
+@login_required
+def add_item():
+    form = ItemsForm(request.form)
+    if form.validate_on_submit():
+        item = Items(name=form.name.data, size = form.size.data, price = form.price.data)
+        db.session.add(item)
+        db.session.commit()
+        flash("Item added successfully")
+        return redirect(url_for('main.add_item'))
+    else:
+        return render_template("add_item.html", form=form)
+        
+        
+   
+@admin.route('/items')
+@login_required
+def view_items():
+    items = Items.query.order_by(Items.id)
+    return render_template("items.html",items=items)
+
+@admin.route('/item/<int:id>')
+@login_required
+def item_zoom(id):
+    item = Items.query.get_or_404(id)
+    return render_template('item.html', item=item)
+
+
+@admin.route('/item/delete/<int:id>')
+@login_required
+def delete_item(id):
+    item_to_delete = Items.query.get_or_404(id)
+    id = current_user.id
+    if id == 1:
+        try:
+            db.session.delete(item_to_delete)
+            db.session.commit()
+            flash("Item was deleted")
+            items = Items.query.order_by(Items.date_posted)
+            return render_template("items.html",items=items)
+
+        
+        
+        except:
+            flash("There was a problem deleting item..try again")
+            items = Items.query.order_by(Items.id)
+            return render_template("items.html",items=items)
+
+    else:
+         flash("Unauthorized Access")
+         items = Items.query.order_by(Items.date_posted)
+         return render_template("items.html",items=items)
+
+
+
+@admin.route('/item/edit/<int:id>', methods = ["GET","POST"])
+@login_required
+def edit_item(id):
+    item = Items.query.get_or_404(id)
+    form = ItemsForm()
+    if form.validate_on_submit():
+        item.name = form.name.data
+       # post.author = form.author.data
+        item.size = form.size.data
+        item.price = form.price.data
+        db.session.add(item)
+        db.session.commit()
+        flash("Item has been updated!")
+        return redirect(url_for('main.item',id=item.id))
+    
+    if current_user.id == 1:
+        form.name.data = item.name
+    # form.author.data = post.author
+        form.size.data = item.size
+        form.price.data = item.price
+        return render_template('edit_item.html', form=form)
+
+    else:
+        flash("Unauthorized Access")
+        items = Items.query.order_by(Items.date_posted)
+        return render_template("items.html",items=items)
+
+
+
+
+@admin.route('/user/add', methods =['GET','POST'])
+def add_user(): 
+    name = None
+    form = UserForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(email=form.email.data).first()
+        if user is None:
+            # Hash password first
+            hash_pw = generate_password_hash(form.password_hash.data, "sha256")
+            user = Users(name=form.name.data,email=form.email.data,password_hash=hash_pw)
+            db.session.add(user)
+            db.session.commit()
+        name = form.name.data
+        form.name.data = ''
+        form.email.data = ''
+        form.password_hash.data = ''
+        flash("User Added Sucessfully")
+    #To display user names on the page 
+    our_users = Users.query.order_by(Users.date_added)   
+    return render_template('add_user.html',form=form,name=name,our_users=our_users)

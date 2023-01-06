@@ -1,0 +1,58 @@
+{% extends'homepage.html' %}
+
+{% block title %} Dashboard {% endblock %}
+
+{% block main %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-2">
+      <!-- Sidebar -->
+      <ul class="nav flex-column nav-pills">
+        <li class="nav-item">
+          <a class="nav-link active" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Orders</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Customers</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Products</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-md-10">
+      <!-- Main content -->
+      <div class="card">
+        <div class="card-header">
+          Dashboard
+        </div>
+        <div class="card-body">
+          <h1>Welcome to the dashboard!</h1>
+        </br></br>
+        <p>You are logged in!</p>
+        <strong>Name: </strong>{{current_user.name}}</br>
+        <strong>User ID: </strong>{{current_user.id}}</br>
+        <strong>Email: </strong>{{current_user.email}}</br>
+        <strong>Date Joined: </strong>{{current_user.date_added}}</br></br>
+      
+          
+            <a class="btn btn-outline-secondary" href="{{url_for('main.update',id =current_user.id)}}">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

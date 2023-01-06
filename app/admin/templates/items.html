@@ -1,0 +1,42 @@
+{% extends 'base_user.html' %}
+
+{% block title %} Menu Items {% endblock %}
+
+
+{% block main %}
+<div class="container">
+
+    <!--This loops through the flash message -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+
+<h1>Menu Items...</h1>
+
+    {% for item in items %}
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <div class="card text-center">
+            <div class="card-header">
+                Menu Items...
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{item.name}}</h5>
+              <hr>
+              <p class="card-text"></br>{{item.size}}</br>{{item.price}}</p>
+              <a class="btn btn-outline-secondary" href="{{url_for('main.item_zoom', id=item.id)}}">View Item</a>
+              <a class="btn btn-outline-secondary" href="{{url_for('main.edit_item', id=item.id)}}">Edit Item</a>
+              <a class="btn btn-outline-danger" href="{{url_for('main.delete_item', id=item.id)}}">Delete Item</a>
+            </div>
+            <div class="card-footer text-muted">
+               Best place to order
+            </div>
+          </div>
+    </div>
+    {% endfor %}
+
+
+{% endblock %}

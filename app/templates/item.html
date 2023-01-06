@@ -1,0 +1,41 @@
+{% extends 'base_user.html' %}
+
+{% block title %} Post {% endblock %}
+
+
+{% block main %}
+<div class="container">
+
+    <!--This loops through the flash message -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <div class="card text-center">
+            <div class="card-header">
+                Menu List...
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{item.name}}</h5>
+              <hr>
+              <p class="card-text"></br>{{item.size}}</br>{{item.price}}</p>
+              <a href="{{url_for('main.view_items')}}" class="btn btn-primary">Back to Menu</a>
+              <a class="btn btn-outline-secondary" href="{{url_for('main.edit_item', id=item.id)}}">Edit Menu</a>
+              <a class="btn btn-outline-danger" href="{{url_for('main.delete_item', id=item.id)}}">Delete Menu</a>
+            </div>
+            <div class="card-footer text-muted">
+                Best package to buy!
+            </div>
+        </div>
+    </div>
+        
+
+
+
+
+{% endblock %}
