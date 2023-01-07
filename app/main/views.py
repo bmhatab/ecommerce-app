@@ -55,7 +55,7 @@ def login():
 @main.route('/dashboard', methods=["GET","POST"])
 @login_required
 def dashboard():
-    return render_template("dashboard.html")
+    return render_template("dashboard.html", active_nav='dashboard')
 
 @main.route('/logout', methods=["GET","POST"])
 @login_required
@@ -307,7 +307,7 @@ def view_cart():
         }
         cart_items_with_attributes.append(item_dict)
 
-    return render_template('cart.html', cart=cart_items_with_attributes, total=total)
+    return render_template('cart.html', cart=cart_items_with_attributes, total=total, active_nav='cart')
 
 
 
