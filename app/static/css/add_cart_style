@@ -1,0 +1,57 @@
+/* Add some basic styling to the form and alert message */
+h1 {
+  text-align: center;
+  color: #444;
+  margin-bottom: 30px;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+form label {
+  display: block;
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+form input[type="text"], form input[type="number"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 18px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+form button[type="submit"] {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  font-size: 18px;
+  color: #fff;
+  background-color: #337ab7;
+  border-color: #2e6da4;
+  border-radius: 4px;
+}
+
+form button[type="submit"]:hover {
+  background-color: #286090;
+  border-color: #204d74;
+}
+
+/* Style the close button for the alert message */
+button.btn-close {
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+button.btn-close:before {
+  content: '×';
+  font-size: 18px;
+  font-weight: bold;
+  color: #f44336;
+}

@@ -19,9 +19,9 @@
         <div class="shadow p-3 mb-5 bg-body rounded">
             <form method="POST" action="{{ url_for('main.add_to_cart') }}">
                 {{ form.csrf_token }}
-                {{ form.name.label }} {{ form.name }}
-                {{ form.quantity.label }} {{ form.quantity(value=1) }}
-                {{ form.submit }}
+                {{ form.name.label(class="form-label") }} {{ form.name(class="form-control") }}
+                {{ form.quantity.label(class="form-label") }} {{ form.quantity(class="form-control",value=1) }}
+                {{ form.submit(class="btn btn-primary") }}
             </form>
         </div>
     </div>

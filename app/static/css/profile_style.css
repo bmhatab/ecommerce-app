@@ -1,0 +1,25 @@
+/* Add some basic styling to the dashboard */
+h1 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 30px;
+  }
+  
+  p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #666;
+  }
+  
+  strong {
+    color: #333;
+  }
+  
+  /* Style the Edit Profile button */
+  
+  
+  a.btn:hover {
+    background-color: #286090;
+    border-color: #204d74;
+  }
+  
