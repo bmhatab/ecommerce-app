@@ -1,0 +1,45 @@
+{% extends 'homepage.html' %}
+
+{% block title %} Menu Items {% endblock %}
+
+
+{% block main %}
+
+    <!--This loops through the flash message -->
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+    <div class="container">
+        <h1>Cart</h1>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in cart %}
+            <tr>
+              <td>{{ item.name }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>${{ item.price }}</td>
+              <td>${{ item.total }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <h3>Total: ${{ total }}</h3>
+        <form method="POST" action="/checkout">
+          <button type="submit" class="btn btn-primary">Checkout</button>
+        </form>
+      </div>
+    
+
+{% endblock %}

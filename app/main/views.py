@@ -1,9 +1,9 @@
 from datetime import datetime
 from app import db,login_manager
 from . import main
-from .forms import UserForm,NamerForm,LoginForm,ItemsForm
-from ..models import Users,Items,Products
-from flask import Flask, render_template,flash,request,redirect,url_for,session
+from .forms import UserForm,NamerForm,LoginForm,ItemsForm,OrderForm,AddToCartForm
+from ..models import Users,Items,Products,Cart
+from flask import Flask, render_template,flash,request,redirect,url_for,session,current_app
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin,login_user,LoginManager,login_required,logout_user,current_user
 
@@ -228,9 +228,96 @@ def menu():
     return render_template('menu.html', products=products)
 
 
-@main.route('/menu/<string:category>')
+@main.route('/menu/<string:category>', methods=['GET','POST'])
 @login_required
 def menu_category(category):
-    products = Products.query.all()
     items = Items.query.filter_by(category=category).all()
-    return render_template("menu_category.html", products=products, items=items)
+    cart = [] 
+    if request.method == 'POST':
+        # get the item name and size from the request form
+        item_name = request.form.get('item_name')
+        item_size = request.form.get('item_size')
+
+        # find the item in the list of items
+        for item in items:
+            if item.name == item_name and item.size == item_size:
+                # add the item to the cart
+                cart = request.form.get('cart', [])
+                cart.append(item)
+
+        # render the template with the updated cart
+        return render_template('menu_category.html', items=items, cart=cart)
+
+
+    return render_template("menu_category.html", items=items,cart=cart)
+
+@main.route('/add_to_cart', methods=['GET', 'POST'])
+def add_to_cart():
+    form = AddToCartForm()
+    items = Items.query.all()
+    form.name.choices = [(items.name, items.name) for items in items]
+
+    if form.validate_on_submit():
+        # Add the product to the cart and redirect to the cart page
+        name = form.name.data
+        quantity = form.quantity.data
+
+        # Check if the item is already in the cart
+        existing_item = Cart.query.filter_by(item_id=name, user_id=current_user.id).first()
+
+        # If the item is already in the cart, update the quantity
+        if existing_item:
+            existing_item.quantity += quantity
+        # If the item is not in the cart, add it as a new entry
+        else:
+            item = Items.query.filter_by(name=name).first()
+            item_id = item.id
+            new_item = Cart(user_id=current_user.id, item_id=item_id, quantity=quantity)
+            db.session.add(new_item)
+        db.session.commit()
+        return redirect(url_for('main.view_cart'))
+    return render_template('add_to_cart.html', form=form)
+
+
+@main.route('/cart')
+def view_cart():
+    # Get all the items in the cart for the current user
+    cart_items = Cart.query.filter_by(user_id=current_user.id).all()
+    total = 0
+
+    def calculate_total(cart_items, total):
+        # Iterate over the items in the cart and calculate the total
+        for item in cart_items:
+            # Get the item from the Items table using the item_id in the Cart item
+            item_obj = Items.query.get(item.id)
+            total += item_obj.price * item.quantity
+        return total
+    
+    total = calculate_total(cart_items, total=total)
+
+    # Create a list of dictionaries that contain the name, price, and total
+    # for each item in the cart
+    cart_items_with_attributes = []
+    for item in cart_items:
+        item_obj = Items.query.get(item.id)
+        item_dict = {
+            'name': item_obj.name,
+            'price': item_obj.price,
+            'quantity': item.quantity,
+            'total': item_obj.price * item.quantity
+        }
+        cart_items_with_attributes.append(item_dict)
+
+    return render_template('cart.html', cart=cart_items_with_attributes, total=total)
+
+
+
+
+
+
+
+@main.route('/checkout', methods=['POST'])
+def checkout():
+    # process payment and clear cart
+    flash('Payment successful')
+    return redirect(url_for('view_cart'))

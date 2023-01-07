@@ -1,7 +1,7 @@
 from .. import main
 from flask import Flask, render_template,flash,request,redirect,url_for
 from flask_wtf import FlaskForm
-from wtforms import Form,StringField,SubmitField,PasswordField,ValidationError
+from wtforms import Form,StringField,SubmitField,PasswordField,SelectField,IntegerField
 from wtforms.validators import DataRequired,EqualTo,Length
 from wtforms.widgets import TextArea
 
@@ -44,3 +44,8 @@ class ProductsForm(FlaskForm):
     category = StringField("Category", validators=[DataRequired()], widget=TextArea())
     description = StringField("Description", validators=[DataRequired()])
     submit = SubmitField()
+
+class AddToCartForm(FlaskForm):
+    name = SelectField('Name', validators=[DataRequired()], choices=[])
+    quantity = IntegerField('Quantity', validators=[DataRequired()])
+    submit = SubmitField('Add to Cart')

@@ -23,22 +23,20 @@
             <a class="nav-link" href="{{url_for('main.menu')}}">Menu</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('main.add_item')}}">Orders</a>
+            <a class="nav-link" href="#">Items</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{url_for('main.name')}}">Cart</a>
+            <a class="nav-link" href="#">Contact</a>
+          </li>
+          <li>
+            <a href="{{url_for('main.logout')}}">
+              <button class="btn btn-sm btn-outline-secondary offset-5" type="button">Logout</button>
+            </a>
           </li>
         </ul>
       </div>
-    <div class="container-fluid">
-    <form class="container-fluid justify-content-start">
-        <a href="{{url_for('main.add_user')}}">
-        <button class="btn btn-outline-success me-2" type="button">Sign Up</button>
-        </a>
-        <a href="{{url_for('main.login')}}">
-        <button class="btn btn-sm btn-outline-secondary" type="button">Login</button>
-        </a>
-        </form>
+    <div class="container">
+
     </div>
     </nav>
     <div class="container-fluid">
@@ -47,10 +45,10 @@
           <!-- Sidebar -->
           <ul class="nav flex-column nav-pills">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Dashboard</a>
+              <a class="nav-link active" href="{{url_for('main.dashboard')}}">Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Orders</a>
+              <a class="nav-link" href="#">Cart</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Customers</a>

@@ -14,7 +14,7 @@ class Users(db.Model,UserMixin):
     date_added = db.Column(db.DateTime, default=datetime.utcnow)
     # password work stuff
     password_hash = db.Column(db.String(128))
-    orders = db.relationship('Sales', backref='sales') #name to use for referencing
+    
 
     @property
     def password(self):
@@ -42,14 +42,6 @@ class Users(db.Model,UserMixin):
 
 # Creating an Items table
 
-class Sales(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255))
-    size = db.Column(db.String())
-    quantity = db.Column(db.Integer())
-    order_date = db.Column(db.DateTime, default=datetime.utcnow)
-    orderer_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    
 
 class Items(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -65,3 +57,14 @@ class Products(db.Model):
     description = db.Column(db.Integer())
    
 
+class Cart(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    item_id = db.Column(db.Integer, db.ForeignKey('items.id'))
+    item_price = db.Column(db.Integer, db.ForeignKey('items.price'))
+    quantity = db.Column(db.Integer)
+
+    def __init__(self, user_id, item_id, quantity):
+        self.user_id = user_id
+        self.item_id = item_id
+        self.quantity = quantity

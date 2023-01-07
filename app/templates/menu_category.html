@@ -1,6 +1,6 @@
-{% extends 'base_user.html' %}
+{% extends 'homepage.html' %}
 
-{% block title %} Products {% endblock %}
+{% block title %} Items {% endblock %}
 
 {% block main %}
 <div class="container">
@@ -24,7 +24,11 @@
         <div class="category-name">{{item.name}}</div>
         <div class="category-description">{{item.size}}<p>${{item.price}}</p></div>
     </br></br></br></br></br></br></br></br>
-        <a class="btn btn-outline-secondary" href="#">Add to Cart</a>
+        <form method="POST">
+            <input type="hidden" name="item_name" value="{{item.name}}">
+            <input type="hidden" name="item_size" value="{{item.size}}">
+            <button type="submit" class="btn btn-outline-secondary"><a href="{{url_for('main.add_to_cart')}}">Add to Cart</a></button>
+        </form>
     </div>
     {% endfor %}
 </ul>
