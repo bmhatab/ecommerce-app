@@ -1,11 +1,12 @@
 from datetime import datetime
 from app import db,login_manager
 from . import main
-from .forms import UserForm,NamerForm,LoginForm,ItemsForm,OrderForm,AddToCartForm
+from .forms import UserForm,NamerForm,LoginForm,ItemsForm,OrderForm,AddToCartForm,PaymentForm
 from ..models import Users,Items,Products,Cart
 from flask import Flask, render_template,flash,request,redirect,url_for,session,current_app
 from werkzeug.security import generate_password_hash,check_password_hash
 from flask_login import UserMixin,login_user,LoginManager,login_required,logout_user,current_user
+from binance.client import Client
 
 
 
@@ -310,14 +311,31 @@ def view_cart():
     return render_template('cart.html', cart=cart_items_with_attributes, total=total, active_nav='cart')
 
 
+@main.route('/clear-cart')
+def clear_cart():
+  # Get all the items in the cart for the current user
+  cart_items = Cart.query.filter_by(user_id=current_user.id).all()
+  
+  # Delete all the items in the cart
+  for item in cart_items:
+    db.session.delete(item)
+  db.session.commit()
+  
+  return redirect(url_for('main.view_cart'))
 
 
 
 
-
-
-@main.route('/checkout', methods=['POST'])
+@main.route("/checkout", methods=['GET','POST'])
 def checkout():
-    # process payment and clear cart
-    flash('Payment successful')
-    return redirect(url_for('view_cart'))
+    # Render the checkout page template
+    return render_template("checkout.html")
+
+
+
+
+
+
+
+
+

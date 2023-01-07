@@ -49,3 +49,9 @@ class AddToCartForm(FlaskForm):
     name = SelectField('Name', validators=[DataRequired()], choices=[])
     quantity = IntegerField('Quantity', validators=[DataRequired()])
     submit = SubmitField('Add to Cart')
+
+
+class PaymentForm(FlaskForm):
+    amount = StringField('Amount', validators=[DataRequired()])
+    account_id = StringField('Account ID', validators=[DataRequired()])
+    submit = SubmitField('Pay')

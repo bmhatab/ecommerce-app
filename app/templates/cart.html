@@ -36,8 +36,9 @@
           </tbody>
         </table>
         <h3>Total: ${{ total }}</h3>
-        <form method="POST" action="/checkout">
-          <button type="submit" class="btn btn-primary">Checkout</button>
+        <form method="POST" action="{{url_for('main.checkout')}}">
+            <button type="submit" class="btn btn-primary">Checkout</button>
+            <a href="{{ url_for('main.clear_cart') }}" class="btn btn-secondary">Clear cart</a>
         </form>
       </div>
     
