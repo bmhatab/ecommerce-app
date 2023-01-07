@@ -26,8 +26,8 @@ def create_app():
     from app.admin import admin
     app.register_blueprint(main)
     app.register_blueprint(admin, url_prefix="/admin")
-    #with app.app_context():
-     #   db.create_all()
+    with app.app_context():
+        db.create_all()
 
     @login_manager.user_loader
     def load_user(id):
