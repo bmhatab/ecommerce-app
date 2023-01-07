@@ -3,25 +3,29 @@
 <html>
 <head>
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cart_style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/add_cart_style.css') }}">
   <title>{% block title %} Home {% endblock %}</title>
 </head>
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">E-Commerce Site</a>
+    <a class="navbar-brand" href="{{url_for('main.index')}}">E-Commerce Site</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home</a>
+          <a class="nav-link" href="{{url_for('main.index')}}">Home</a>
         </li>
         <li class="nav-item active">
           <a class="nav-link" href="{{url_for('main.dashboard')}}">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Shop</a>
+          <a class="nav-link" href="{{url_for('main.menu_base')}}">Menu</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
@@ -69,6 +73,7 @@
   
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="static/js/script.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

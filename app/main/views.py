@@ -15,22 +15,16 @@ from binance.client import Client
 def index():
     return render_template("base_home.html")
 
+@main.route('/menu_base')
+def menu_base():
+    products = Products.query.all()
+    return render_template("menu_base.html",products=products)
+
 @main.route('/user/<name>')
 def user(name):
     return render_template("user.html",user_name=name)
 
-#create a name page
-@main.route('/name',methods=['GET','POST']) #post method needed for page containing forms
-def name():
-    name = None
-    form = NamerForm()
-    #validating form
-    if form.validate_on_submit():
-        name = form.name.data
-        form.name.data =''
-        flash("Form submitted successfully!")
-        
-    return render_template("name.html",name=name,form=form)
+
 
 @main.route('/login',methods=['GET','POST']) #post method needed for page containing forms
 def login():
@@ -251,6 +245,12 @@ def menu_category(category):
 
 
     return render_template("menu_category.html", items=items,cart=cart)
+
+@main.route('/menu_base/<string:category>', methods=['GET','POST'])
+def menu_category_base(category):
+    items = Items.query.filter_by(category=category).all()
+    return render_template("menu_category_base.html", items=items)
+    
 
 @main.route('/add_to_cart', methods=['GET', 'POST'])
 def add_to_cart():

@@ -1,7 +1,6 @@
 {% extends 'base_home.html' %}
 
-{% block title %} Menu Items {% endblock %}
-
+{% block title %} Items {% endblock %}
 
 {% block main %}
 <div class="container">
@@ -15,19 +14,23 @@
     {% endfor %}
 
 
-    <h1>Menu Items...</h1>
 
+<h1>Items...</h1>
+
+
+<ul>
     {% for item in items %}
-
     <div class="menu-card">
         <div class="category-name">{{item.name}}</div>
-        <div class="category-description">{{item.size}}<p>{{item.price}}</p></div>
-    </br></br></br></br></br></br></br></br>
-        <a class="btn btn-outline-secondary" href="{{url_for('main.item_zoom', id=item.id)}}">View Item</a>
+        <div class="category-description">{{item.size}}<p>${{item.price}}</p></div>
+    </br></br></br></br>
+        <form method="POST">
+            <input type="hidden" name="item_name" value="{{item.name}}">
+            <input type="hidden" name="item_size" value="{{item.size}}">
+            <button type="submit" class="btn btn-outline-secondary"><a href="#">Add to Cart</a></button>
+        </form>
     </div>
-   
-    
     {% endfor %}
-
+</ul>
 
 {% endblock %}

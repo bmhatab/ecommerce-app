@@ -4,7 +4,6 @@
 
 
 {% block main %}
-<div class="container">
 
     <!--This loops through the flash message -->
     {% for message in get_flashed_messages() %}
@@ -17,15 +16,14 @@
 
     <h1>Menu Items...</h1>
 
-    {% for item in items %}
+    {% for product in products %}
 
     <div class="menu-card">
-        <div class="category-name">{{item.name}}</div>
-        <div class="category-description">{{item.size}}<p>{{item.price}}</p></div>
-    </br></br></br></br></br></br></br></br>
-        <a class="btn btn-outline-secondary" href="{{url_for('main.item_zoom', id=item.id)}}">View Item</a>
+        <div class="category-name">{{product.name}}</div>
+        <div class="category-description">{{product.category}}<p>{{product.description}}</p></div>
+     </br>
+        <a class="btn btn-outline-secondary" href="{{ url_for('main.menu_category_base', category=product.category) }}">View Items</a>
     </div>
-   
     
     {% endfor %}
 
