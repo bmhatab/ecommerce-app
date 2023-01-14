@@ -25,7 +25,7 @@
           <a class="nav-link" href="{{url_for('main.dashboard')}}">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{url_for('main.menu_base')}}">Menu</a>
+          <a class="nav-link" href="{{url_for('main.menu_base')}}">Services</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">About</a>
@@ -34,43 +34,46 @@
           <a class="nav-link" href="#">Contact</a>
         </li>
       </ul>
-      <div class="container-fluid">
-        <form class="container-fluid justify-content-start">
-            <a href="{{url_for('main.add_user')}}">
-            <button class="btn btn-outline-success me-2" type="button">Sign Up</button>
-            </a>
-            <a href="{{url_for('main.login')}}">
-            <button class="btn btn-sm btn-outline-secondary" type="button">Login</button>
-            </a>
-        </form>
-        </div>
+      <div class="container-fluid-options">
+        <a href="{{url_for('main.add_user')}}">
+          <button class="btn btn-outline-success me-2" type="button">Sign Up</button>
+        </a>
+        <a href="{{url_for('main.login')}}">
+          <button class="btn btn-sm btn-outline-secondary" type="button">Login</button>
+        </a>
+      </div>
   </nav>
   {% block main %}
     <div class="jumbotron jumbotron-fluid">
       <div class="container">
-        <h1 class="display-4">Welcome to Our Restaurant</h1>
-        <p class="lead">We offer a wide variety of delicious dishes, made with the freshest ingredients. Take a look at our menu to see all of the mouthwatering options we have available.</p>
-        <a href="/menu" class="btn btn-primary btn-lg">View Menu</a>
+        <h1 class="display-4">Serendi Development</h1>
+        <p class="lead"></p>
+        <a href="/menu" class="btn btn-primary btn-lg">View Categories</a>
       </div>
     </div>
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <h2>Fresh Ingredients</h2>
-          <p>We believe in using only the freshest ingredients in our dishes. Our chefs go to great lengths to source the highest quality produce, meats, and other ingredients.</p>
+          <h2>Python Web Application Development</h2>
+          <p>Build web applications, Customer Relationship Management(CRM) Apps, Inventory Management Systems, and any app with Python</p>
         </div>
         <div class="col-md-4">
-          <h2>Expertly Crafted</h2>
-          <p>Our chefs are highly skilled and have years of experience in creating delicious, mouthwatering
-            </p>
+          <h2>Python Scripting and Automation</h2>
+          <p>Develop Automation bots that run both offline and online depending on your use case for web scraping, file handling, and marketing</p>
         </div>
-    
-
-
+        <div class="col-md-4">
+          <h2>Data Analytics and Visualization</h2>
+          <p>Perform data analytics on big data with python's powerful libraries and AI tools for gaining insights on customer data </p>
+        </div>
 
         {% endblock %}
 
   
+
+
+        <footer>
+          <p>Copyright © {{ 2022 }} Serendi E-commerce</p>
+        </footer>
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
   <script src="static/js/script.js"></script>

@@ -14,7 +14,7 @@
     {% endfor %}
 
 
-    <h1>Menu Items...</h1>
+    <h1>Services Category</h1>
 
     {% for product in products %}
 
@@ -22,7 +22,7 @@
         <div class="category-name">{{product.name}}</div>
         <div class="category-description">{{product.category}}<p>{{product.description}}</p></div>
      </br>
-        <a class="btn btn-outline-secondary" href="{{ url_for('main.menu_category_base', category=product.category) }}">View Items</a>
+     <a class="view-menu-btn" href="{{ url_for('main.menu_category_base', category=product.category) }}">View Items</a>  
     </div>
     
     {% endfor %}

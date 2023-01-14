@@ -11,10 +11,18 @@
     border-radius: 8px;
     overflow: hidden;
     transition: all 0.2s ease-in-out;
-    display: inline-block; /* Make the menu cards appear side by side */
+    display: inline-flex; /* Make the menu cards appear side by side */
     vertical-align: top; /* Align the menu cards to the top */
   }
+
+  @media only screen and (max-width:700px) {
+    .menu-card {
+       margin-left:25%;
+      }
   
+  }
+  
+ 
   .menu-card:hover {
     box-shadow: 0px 20px 40px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
@@ -27,6 +35,7 @@
     margin: 16px 0;
   }
   
+
   .menu-card .category-description {
     font-size: 16px;
     color: #666;
@@ -36,14 +45,15 @@
   
   .menu-card .view-menu-btn {
     display: block;
-    width: 80%;
+    width: 50%;
     height: 40px;
-    background-color: #333;
-    color: #fff;
+    background-color:transparent;
+    color: black;
+    text-align: center;
     font-size: 18px;
     font-weight: bold;
-    border: none;
-    border-radius: 20px;
+    border: solid;
+    border-radius: 5px;
     cursor: pointer;
     transition: all 0.2s ease-in-out;
   }
@@ -185,6 +195,13 @@
   float: right;
 }
 
+.container-fluid-options {
+  margin-left: auto;
+  display: flex;
+  justify-content: space-between;
+
+}
+
 /* Style the side navigation */
 .sidenav {
   height: 100%;
@@ -246,3 +263,18 @@
   .sidenav a {font-size: 18px;}
 }
  
+/* Footer styling */
+footer {
+  background-color: #f2f2f2;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  
+}
+
