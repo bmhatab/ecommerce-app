@@ -17,9 +17,9 @@
         <h1>Add Item </h1> 
         <br/>
         <div class="shadow p-3 mb-5 bg-body rounded">
-            <form method="POST" action="{{ url_for('main.add_to_cart') }}">
+            <form method="POST" action="{{ url_for('main.add_to_cart',id = items.id) }}">
                 {{ form.csrf_token }}
-                {{ form.name.label(class="form-label") }} {{ form.name(class="form-control") }}
+                {{ form.name.label(class="form-label") }}{{ form.name(class="form-control") }}
                 {{ form.quantity.label(class="form-label") }} {{ form.quantity(class="form-control",value=1) }}
                 {{ form.submit(class="btn btn-primary") }}
             </form>

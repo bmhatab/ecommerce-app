@@ -252,11 +252,11 @@ def menu_category_base(category):
     return render_template("menu_category_base.html", items=items)
     
 
-@main.route('/add_to_cart', methods=['GET', 'POST'])
-def add_to_cart():
+@main.route('/add_to_cart/<int:id>', methods=['GET', 'POST'])
+def add_to_cart(id):
     form = AddToCartForm()
-    items = Items.query.all()
-    form.name.choices = [(item.id, item.name) for item in items]
+    items = Items.query.get(id)
+    form.name.data = items.name
 
     if form.validate_on_submit():
         # Add the product to the cart and redirect to the cart page
@@ -264,7 +264,7 @@ def add_to_cart():
         quantity = form.quantity.data
 
         # Check if the item is already in the cart
-        existing_item = Cart.query.filter_by(item_id=item_id, user_id=current_user.id).first()
+        existing_item = Cart.query.filter_by(item_id=item_id, user_id=current_user.id, items = items).first()
 
         # If the item is already in the cart, update the quantity
         if existing_item:
@@ -275,7 +275,7 @@ def add_to_cart():
             db.session.add(new_item)
         db.session.commit()
         return redirect(url_for('main.view_cart'))
-    return render_template('add_to_cart.html', form=form)
+    return render_template('add_to_cart.html', form=form, items=items)
 
 
 def calculate_total(cart_items, total):
