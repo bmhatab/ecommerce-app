@@ -46,7 +46,7 @@ class ProductsForm(FlaskForm):
     submit = SubmitField()
 
 class AddToCartForm(FlaskForm):
-    name = StringField('Name', validators=[DataRequired()])
+    name = SelectField('Item Name', choices=[], default='')
     quantity = IntegerField('Quantity', validators=[DataRequired()])
     submit = SubmitField('Add to Cart')
 
