@@ -41,9 +41,10 @@ def login():
                 
             else:
                 flash("Wrong password -- Try again")
+                return render_template("login.html",form=form)
         else:
             flash("That user doesn't exist -- Try again")
-    
+            return render_template("login.html",form=form)
     else:
         return render_template("login.html",form=form)
 
