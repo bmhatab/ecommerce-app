@@ -262,7 +262,7 @@ def add_to_cart(id):
     
     if form.validate_on_submit():
         # Add the product to the cart and redirect to the cart page
-        item_id = form.name.data
+        item_id = item.id
         quantity = form.quantity.data
 
         # Check if the item is already in the cart
@@ -283,11 +283,12 @@ def add_to_cart(id):
 def calculate_total(cart_items, total):
         # Iterate over the items in the cart and calculate the total
         for item in cart_items:
-            # Get the item from the Items table using the item_id in the Cart item
             item_obj = Items.query.filter_by(id=item.item_id).first()
             if item_obj:
                 total += item_obj.price * item.quantity
-                total += item_obj.price * item.quantity
+            else:
+                print(f"Item with id {item.item_id} not found in Items table")
+            
         return total
 
 
@@ -309,7 +310,7 @@ def view_cart():
                 'name': item_obj.name,
                 'price': item_obj.price,
                 'quantity': item.quantity,
-                'total': item_obj.price * item.quantity
+                'total':  item.quantity * item_obj.price
             }
             cart_items_with_attributes.append(item_dict)
 

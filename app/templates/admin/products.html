@@ -1,6 +1,6 @@
 {% extends 'admin_index.html' %}
 
-{% block title %} Products {% endblock %}
+{% block title %} Services {% endblock %}
 
 
 {% block main %}
@@ -15,13 +15,13 @@
     {% endfor %}
 
 
-<h1>Products...</h1>
+<h1>Services</h1>
 
     {% for product in products %}
     <div class="shadow p-3 mb-5 bg-body rounded">
         <div class="card text-center">
             <div class="card-header">
-                Products...
+                Services
             </div>
             <div class="card-body">
               <h5 class="card-title">{{product.name}}</h5>
