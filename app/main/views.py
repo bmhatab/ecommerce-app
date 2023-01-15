@@ -284,8 +284,10 @@ def calculate_total(cart_items, total):
         # Iterate over the items in the cart and calculate the total
         for item in cart_items:
             # Get the item from the Items table using the item_id in the Cart item
-            item_obj = Items.query.get(item.id)
-            total += item_obj.price * item.quantity
+            item_obj = Items.query.filter_by(id=item.item_id).first()
+            if item_obj:
+                total += item_obj.price * item.quantity
+                total += item_obj.price * item.quantity
         return total
 
 
@@ -301,14 +303,15 @@ def view_cart():
     # for each item in the cart
     cart_items_with_attributes = []
     for item in cart_items:
-        item_obj = Items.query.get(item.item_id)
-        item_dict = {
-            'name': item_obj.name,
-            'price': item_obj.price,
-            'quantity': item.quantity,
-            'total': item_obj.price * item.quantity
-        }
-        cart_items_with_attributes.append(item_dict)
+        item_obj = Items.query.filter_by(id=item.item_id).first()
+        if item_obj:
+            item_dict = {
+                'name': item_obj.name,
+                'price': item_obj.price,
+                'quantity': item.quantity,
+                'total': item_obj.price * item.quantity
+            }
+            cart_items_with_attributes.append(item_dict)
 
     return render_template('cart.html', cart=cart_items_with_attributes, total=total, active_nav='cart')
 
