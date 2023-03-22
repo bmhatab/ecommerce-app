@@ -16,7 +16,7 @@ These instructions will get you a copy of the project up and running on your loc
  - Install the required packages:
  - pip install -r requirements.txt
  
- ####Set the environment variables:
+ #### Set the environment variables:
   In command line :
   - set FLASK_APP = manager.py
   
